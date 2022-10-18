@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body,
+html {
+	font-family: 'Poppins', sans-serif;
+	overflow-x: hidden;
+}
+
+* {
+	outline: none;
+}
+
+.btn {
+	@apply p-2 px-5 rounded transition transform font-semibold text-sm;
+}
+
+.table {
+	@apply border-collapse w-full whitespace-nowrap overflow-x-hidden;
+}
+
+.table th {
+	@apply text-left uppercase text-xs text-gray-500 p-3;
+}
+
+.table tbody tr {
+	@apply transition hover:(bg-gray-50) border-t border-gray-100;
+}
+
+.table td {
+	@apply p-3;
+}
+
+.main-content > * {
+	animation: show-content 0.5s;
+}
+
+@keyframes show-content {
+	from {
+		opacity: 0;
+	}
+}
+
+.input {
+	@apply w-full rounded focus:(ring-2 ring-primary border-green-500) outline-none border-gray-100 transition min-h-10 p-2;
+}
