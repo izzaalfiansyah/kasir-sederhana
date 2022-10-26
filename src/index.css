@@ -40,6 +40,12 @@ html {
 	}
 }
 
-.input {
-	@apply w-full rounded focus:(ring-2 ring-primary border-green-500) outline-none border-gray-100 transition min-h-10 p-2;
+.animate-down {
+	animation: down 0.4s;
+}
+
+@keyframes down {
+	from {
+		transform: translateY(-100%);
+	}
 }

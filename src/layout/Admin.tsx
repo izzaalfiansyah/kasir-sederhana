@@ -19,22 +19,22 @@ export const Admin: Component = () => {
 		},
 		{
 			path: '/user',
-			title: 'Users',
+			title: 'User',
 			icon: 'user',
 		},
 		{
 			path: '/product',
-			title: 'Products',
+			title: 'Data Produk',
 			icon: 'image',
 		},
 		{
 			path: '/transaction',
-			title: 'Transactions',
+			title: 'Data Transaksi',
 			icon: 'folder-open',
 		},
 		{
 			path: '/report',
-			title: 'Report',
+			title: 'Laporan',
 			icon: 'newspaper',
 		},
 	];
@@ -86,7 +86,7 @@ export const Admin: Component = () => {
 									<div class="text-center w-6 mr-3">
 										<i class="far fa-user"></i>
 									</div>
-									<div>Account</div>
+									<div>Akun</div>
 								</NavLink>
 							</li>
 							<li class="mb-0">
@@ -122,7 +122,6 @@ export const Admin: Component = () => {
 							href="/account"
 							class="p-2 px-4 rounded-full flex items-center font-semibold text-base"
 						>
-							<div class="rounded-full bg-primary w-10 h-10 lg:mr-3"></div>
 							<div class="lg:block hidden">Superadmin</div>
 						</NavLink>
 					</div>

@@ -93,6 +93,14 @@ class UserController extends Controller
         }
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        request()->session()->flush();
+
+        return response(['berhasil logout']);
+    }
+
     public function auth()
     {
         return response(Auth::user());

@@ -1,38 +1,88 @@
-import { Component } from 'solid-js';
+import { Component, createSignal, onMount } from 'solid-js';
+import { Input, Textarea } from '../components/Input';
+import { auth, http, showSnackbar } from '../lib';
+import { User } from './User';
 
 export const Account: Component = () => {
+	const [data, setData] = createSignal<User>();
+
+	async function get() {
+		await setData({});
+		const { data } = await http.get('/user/' + auth.id);
+		setData(data);
+		handleData('password', '');
+	}
+
+	async function update(e: any) {
+		e.preventDefault();
+
+		try {
+			await http.put('/user/' + auth.id, data());
+			showSnackbar('data berhasil diedit');
+			get();
+		} catch (err: any) {
+			showSnackbar(err.response.data, 'bg-red-400');
+		}
+	}
+
+	function handleData(key: any, value: any) {
+		setData((item) => {
+			(item as any)[key] = value;
+			return item;
+		});
+	}
+
+	onMount(() => {
+		get();
+	});
+
 	return (
-		<div class="bg-white rounded shadow p-6">
+		<form onSubmit={update} class="bg-white rounded shadow p-6">
 			<div class="flex flex-wrap -mx-2">
-				<div class="mb-3 lg:w-1/2 w-full px-2">
-					<span class="mb-1">Name</span>
-					<input type="text" class="input" placeholder="Enter Name" />
+				<div class="lg:w-1/2 w-full px-2">
+					<Input
+						label="Nama"
+						placeholder="Masukkan Nama"
+						value={data()?.nama}
+						onInput={(e) => handleData('nama', e.currentTarget.value)}
+					/>
 				</div>
-				<div class="mb-3 lg:w-1/2 w-full px-2">
-					<span class="mb-1">Phone Number</span>
-					<input type="tel" class="input" placeholder="Enter Phone Number" />
-				</div>
-			</div>
-			<div class="mb-3">
-				<span class="mb-1">Address</span>
-				<textarea rows="3" class="input resize-none" placeholder="Enter Address"></textarea>
-			</div>
-			<div class="mb-3">
-				<span class="mb-1">Username</span>
-				<input type="text" class="input" placeholder="Enter Username" />
-			</div>
-			<div class="mb-3">
-				<span class="mb-1">Password</span>
-				<input type="password" class="input" placeholder="Enter Password" />
-				<div class="text-xs text-gray-400">
-					You can denied this field if don't want to change password
+				<div class="lg:w-1/2 w-full px-2">
+					<Input
+						label="Nomor Telepon"
+						type="tel"
+						placeholder="Masukkan Nomor Telepon"
+						onInput={(e) => handleData('telepon', e.currentTarget.value)}
+						value={data()?.telepon}
+					/>
 				</div>
 			</div>
+			<Textarea
+				rows="3"
+				label="Alamat"
+				value={data()?.alamat}
+				onInput={(e) => handleData('alamat', e.currentTarget.value)}
+				placeholder="Masukkan Alamat"
+			/>
+			<Input
+				type="text"
+				label="Username"
+				placeholder="Masukkan Username"
+				onInput={(e) => handleData('username', e.currentTarget.value)}
+				value={data()?.username}
+			/>
+			<Input
+				label="Password"
+				type="password"
+				onInput={(e) => handleData('password', e.currentTarget.value)}
+				placeholder="Masukkan Password"
+			/>
+			<div class="text-xs text-gray-400 -mt-3">Kosongkan jika tidak ingin mengganti password</div>
 			<div class="mt-10">
 				<button type="submit" class="btn bg-primary hover:bg-secondary">
-					SAVE MY ACCOUNT
+					SIMPAN AKUN
 				</button>
 			</div>
-		</div>
+		</form>
 	);
 };

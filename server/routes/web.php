@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers as Controller;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,13 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [Controller\UserController::class, 'login']);
-Route::get('/auth', [Controller\UserController::class, 'auth']);
-Route::resource('/user', Controller\UserController::class);
-Route::get('/produk/scan', [Controller\ProdukController::class, 'scan']);
-Route::resource('/produk', Controller\ProdukController::class);
-Route::resource('/transaksi.detail', Controller\TransaksiDetailController::class);
-Route::resource('/transaksi', Controller\TransaksiController::class);
+Route::get('/logout', [Controller\UserController::class, 'logout']);
+
+Route::middleware(AuthMiddleware::class)->group(function () {
+    Route::get('/auth', [Controller\UserController::class, 'auth']);
+    Route::resource('/user', Controller\UserController::class);
+    Route::get('/produk/scan', [Controller\ProdukController::class, 'scan']);
+    Route::resource('/produk', Controller\ProdukController::class);
+    Route::resource('/transaksi.detail', Controller\TransaksiDetailController::class);
+    Route::resource('/transaksi', Controller\TransaksiController::class);
+});

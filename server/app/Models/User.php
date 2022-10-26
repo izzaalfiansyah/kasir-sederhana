@@ -37,7 +37,7 @@ class User extends Authenticatable
     {
         return [
             'username' => ['required', $id ? Rule::unique('user')->ignore($id) : Rule::unique('user'), 'min:5'],
-            'password' => ['required', $id ? 'nullable' : 'required', Password::min(8)],
+            'password' => [$id ? 'nullable' : 'required', Password::min(8)],
             'nama' => 'required',
             'alamat' => 'required',
             'telepon' => 'required',
