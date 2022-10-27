@@ -30,7 +30,7 @@ class TransaksiController extends Controller
             $builder = $builder->limit($limit)->skip(($page - 1) * $limit);
         }
 
-        $data = $builder->get();
+        $data = $builder->orderBy('created_at', 'desc')->get();
 
         return response($data)
             ->header('X-Total-Count', $totalCount)

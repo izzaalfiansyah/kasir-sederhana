@@ -49,6 +49,8 @@
 	async function destroy() {
 		await http.delete('/user/' + req.value.id);
 		showSnackbar('data berhasil dihapus');
+		modalDelete.value = false;
+		get();
 	}
 
 	onMounted(() => {

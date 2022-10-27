@@ -1,6 +1,6 @@
 <script lang="ts" setup="">
 	import { Button, Card, Input, Loading, Modal } from '@/component';
-	import { http, showSnackbar } from '@/lib';
+	import { formatMoney, http, localeMoney, showSnackbar } from '@/lib';
 	import { onMounted, ref } from 'vue';
 
 	export interface Produk {
@@ -21,7 +21,9 @@
 	const modalDelete = ref(false);
 
 	function nullable() {
-		req.value = {};
+		req.value = {
+			satuan: 'Pcs',
+		};
 	}
 
 	async function get() {
@@ -48,6 +50,8 @@
 	async function destroy() {
 		await http.delete('/produk/' + req.value.id);
 		showSnackbar('data berhasil dihapus');
+		modalDelete.value = false;
+		get();
 	}
 
 	onMounted(() => {
@@ -87,10 +91,10 @@
 						<td colspan="99" class="text-center">data tidak tersedia</td>
 					</tr>
 					<tr v-for="item in data">
-						<td><img :src="item.barcodeUrl" alt="" class="w-200px" /></td>
+						<td><img :src="item.barcodeUrl" alt="" class="w-120px" /></td>
 						<td class="font-semibold">{{ item.nama }}</td>
 						<td>{{ item.satuan }}</td>
-						<td>RP {{ item.harga?.toLocaleString('id-ID') }}</td>
+						<td>{{ formatMoney(item.harga as number) }}</td>
 						<td class="text-right">
 							<Button
 								variant="primary"
@@ -134,7 +138,13 @@
 					placeholder="Masukkan Jenis Satuan"
 					v-model="req.satuan"
 				></Input>
-				<Input type="number" label="Harga" placeholder="Masukkan Harga" v-model="req.harga"></Input>
+				<Input
+					type="number"
+					label="Harga"
+					:suffix="localeMoney"
+					placeholder="Masukkan Harga"
+					v-model="req.harga"
+				></Input>
 				<div class="text-right">
 					<Button variant="primary" mt="5" type="submit">Simpan Data</Button>
 				</div>

@@ -28,7 +28,7 @@ export const showSnackbar = (content: any, color: string = '') => {
 	const snackbar = document.createElement('div');
 	snackbar.innerHTML = `
 	<div class="fixed top-0 left-0 right-0 flex justify-center p-5 animate-down z-100">
-			<div class="lg:w-550px w-full text-white p-4 rounded shadow shadow-lg ${color || 'bg-primary'}">
+			<div class="lg:w-550px w-full text-white p-4 rounded shadow shadow-lg ${color || 'bg-green-400'}">
 				${content}
 			</div>
 		</div>
@@ -37,4 +37,10 @@ export const showSnackbar = (content: any, color: string = '') => {
 		snackbar.remove();
 	}, 3000);
 	document.body.append(snackbar);
+};
+
+export const localeMoney = '$';
+
+export const formatMoney = (number: any) => {
+	return localeMoney + parseInt(number).toLocaleString('id-ID');
 };

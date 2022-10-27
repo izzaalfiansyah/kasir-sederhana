@@ -23,8 +23,8 @@ return new class extends Migration
             $table->integer('hargaAkhir');
             $table->timestamps();
 
-            $table->foreign('transaksiId')->on('transaksi')->references('id');
-            $table->foreign('produkId')->on('produk')->references('id');
+            $table->foreign('transaksiId')->on('transaksi')->references('id')->onDelete('cascade');
+            $table->foreign('produkId')->on('produk')->references('id')->onDelete('cascade');
         });
     }
 

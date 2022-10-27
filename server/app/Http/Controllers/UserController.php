@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $builder = new Model();
-        $data = $builder->get();
+        $data = $builder->orderBy('nama')->get();
 
         return response($data);
     }

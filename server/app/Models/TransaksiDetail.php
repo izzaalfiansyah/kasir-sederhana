@@ -20,6 +20,14 @@ class TransaksiDetail extends Model
         'hargaAkhir',
     ];
 
+    public function setHargaAkhirAttribute()
+    {
+        $subtotal = $this->harga * $this->jumlah;
+        $hargaAkhir = $subtotal - ($subtotal * ($this->diskon / 100));
+
+        return $hargaAkhir;
+    }
+
     public $casts = [
         'transaksiId' => 'integer',
         'produkId' => 'integer',
@@ -45,7 +53,6 @@ class TransaksiDetail extends Model
             'harga' => 'required|integer',
             'jumlah' => 'required|integer',
             'diskon' => 'required|integer',
-            'hargaAkhir' => 'required|integer',
         ];
     }
 }

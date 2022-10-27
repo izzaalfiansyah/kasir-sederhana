@@ -40,7 +40,7 @@ class ProdukController extends Controller
             $builder = $builder->limit($limit)->skip(($page - 1) * $limit);
         }
 
-        $data = $builder->get();
+        $data = $builder->orderBy('nama')->get();
 
         return response($data)
             ->header('X-Total-Count', $totalCount)
@@ -63,7 +63,7 @@ class ProdukController extends Controller
         }
 
         $data = $schema->validated();
-        $code = $data['barcode'] = date('ymd') . strtoupper($this->randomString());
+        $code = $data['barcode'] = date('ymdHis');
         $data['barcodeImg'] = $this->generateBarcode($code);
 
         $item = Model::create($data);

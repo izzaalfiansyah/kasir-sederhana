@@ -24,12 +24,19 @@ class Transaksi extends Model
     ];
 
     public $appends = [
+        'subtotal',
         'total',
     ];
 
+    public function getSubtotalAttribute()
+    {
+        $subtotal = (int) TransaksiDetail::select(DB::raw('sum(hargaAkhir) as subtotal'))->where('transaksiId', $this->id)->first()?->subtotal;
+        return $subtotal;
+    }
+
     public function getTotalAttribute()
     {
-        $total = (int) TransaksiDetail::select(DB::raw('sum(hargaAkhir) as total'))->where('transaksiId', $this->id)->first()?->total;
+        $total = (int) $this->getSubtotalAttribute() + $this->pajak;
         return $total;
     }
 
