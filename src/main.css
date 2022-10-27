@@ -49,3 +49,13 @@ html {
 		transform: translateY(-100%);
 	}
 }
+
+.animate-up {
+	animation: up 0.4s;
+}
+
+@keyframes up {
+	from {
+		transform: translateY(100%);
+	}
+}

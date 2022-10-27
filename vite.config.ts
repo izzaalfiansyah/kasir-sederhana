@@ -1,13 +1,15 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
-import windicssPlugin from 'vite-plugin-windicss';
+import { fileURLToPath, URL } from 'node:url';
 
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import windi from 'vite-plugin-windicss';
+
+// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [solidPlugin(), windicssPlugin()],
-	server: {
-		port: 3000,
-	},
-	build: {
-		target: 'esnext',
+	plugins: [vue(), windi()],
+	resolve: {
+		alias: {
+			'@': fileURLToPath(new URL('./src', import.meta.url)),
+		},
 	},
 });
