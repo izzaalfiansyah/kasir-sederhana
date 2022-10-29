@@ -18,6 +18,7 @@
 			class="w-full rounded focus:(ring-2 ring-primary border-green-500) outline-none border border-gray-100 transition min-h-10 p-2"
 			:value="modelValue"
 			@change="$emit('update:modelValue', ($event.target as any).value)"
+			v-bind="$attrs"
 		>
 			<template v-if="items">
 				<option v-for="item in items" :value="item.value">{{ item.text }}</option>

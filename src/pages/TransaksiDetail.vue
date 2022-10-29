@@ -31,6 +31,9 @@
 	function nullable() {
 		req.value = {
 			diskon: 0,
+			hargaAkhir: 0,
+			harga: 0,
+			jumlah: 0,
 		};
 	}
 
@@ -42,6 +45,12 @@
 	async function getProduk() {
 		const res = await http.get('/produk');
 		produk.value = res.data;
+	}
+
+	async function showProduk() {
+		const res = await http.get('/produk/' + req.value.produkId);
+		req.value.harga = res.data.harga;
+		handleHargaAkhir();
 	}
 
 	async function get() {
@@ -70,6 +79,12 @@
 		showSnackbar('item berhasil dihapus');
 		modalDelete.value = false;
 		get();
+	}
+
+	function handleHargaAkhir() {
+		const subtotal = (req.value.harga as number) * (req.value.jumlah as number);
+		console.log(subtotal);
+		req.value.hargaAkhir = subtotal - (subtotal * (req.value.diskon as number)) / 100;
 	}
 
 	onMounted(() => {
@@ -212,11 +227,21 @@
 							text: `${item.nama} (${formatMoney(item.harga as number)})`,
 						})),
 					]"
+					@change="showProduk"
 				>
 				</Select>
 				<Input
+					label="Harga"
+					placeholder="Harga Produk"
+					:value="formatMoney(req.harga || 0)"
+					disabled
+				>
+				</Input>
+				<Input
 					type="number"
 					label="Jumlah"
+					min="0"
+					@input="handleHargaAkhir"
 					placeholder="Masukkan Jumlah"
 					v-model="req.jumlah"
 				></Input>
@@ -224,9 +249,18 @@
 					type="number"
 					label="Diskon"
 					placeholder="Masukkan Diskon"
+					@input="handleHargaAkhir"
 					v-model="req.diskon"
 					suffix="%"
+					min="0"
 					max="100"
+				></Input>
+				<Input
+					label="Subtotal"
+					placeholder="Subtotal"
+					:value="formatMoney(req.hargaAkhir || 0)"
+					max="100"
+					disabled
 				></Input>
 				<div class="text-right">
 					<Button variant="primary" mt="5" type="submit">Simpan Item</Button>

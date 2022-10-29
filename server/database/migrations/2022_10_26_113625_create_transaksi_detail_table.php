@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('transaksiId')->unsigned();
             $table->bigInteger('produkId')->unsigned();
-            $table->integer('harga');
-            $table->integer('jumlah');
+            $table->double('harga');
+            $table->double('jumlah');
             $table->integer('diskon');
-            $table->integer('hargaAkhir');
+            $table->double('hargaAkhir');
             $table->timestamps();
 
             $table->foreign('transaksiId')->on('transaksi')->references('id')->onDelete('cascade');

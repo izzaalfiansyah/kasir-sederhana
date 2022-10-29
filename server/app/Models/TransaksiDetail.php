@@ -31,10 +31,10 @@ class TransaksiDetail extends Model
     public $casts = [
         'transaksiId' => 'integer',
         'produkId' => 'integer',
-        'harga' => 'integer',
-        'jumlah' => 'integer',
+        'harga' => 'numeric',
+        'jumlah' => 'numeric',
         'diskon' => 'integer',
-        'hargaAkhir' => 'integer',
+        'hargaAkhir' => 'numeric',
     ];
 
     public $with = [
@@ -50,8 +50,8 @@ class TransaksiDetail extends Model
     {
         return [
             'produkId' => 'required|integer',
-            'harga' => 'required|integer',
-            'jumlah' => 'required|integer',
+            'harga' => 'required|numeric',
+            'jumlah' => 'required|numeric',
             'diskon' => 'required|integer',
         ];
     }
